@@ -1,0 +1,11 @@
+[Unit]
+Description=Apply WLED startup/shutdown settings
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=%h/.local/bin/wledctl startup
+ExecStop=%h/.local/bin/wledctl shutdown
+
+[Install]
+WantedBy=default.target

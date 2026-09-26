@@ -1,0 +1,27 @@
+"""TEMPLATE for your own plugin. Rename to .py (and drop into
+~/.config/wledctl/plugins/ or wledctl/plugins/) to enable.
+
+Ideas: react to Home Assistant / MQTT events, sync with music, CPU-temp colour,
+Pomodoro timer, notification flashes, sunrise alarm, call from cron or keybinds.
+"""
+
+
+def register(app):
+    def setup(p):
+        p.add_argument("times", type=int, nargs="?", default=3)
+
+    @app.command("flash", help="Example: flash the LEDs white N times", setup=setup)
+    def flash(args, app):
+        import time
+
+        def do(c):
+            for _ in range(args.times):
+                c.set_state({"on": True, "bri": 255, "seg": {"col": [[255, 255, 255]]}, "transition": 0})
+                time.sleep(0.2)
+                c.power(False)
+                time.sleep(0.2)
+        return app.run_on(args, do)
+
+    # Optional: run extra things at boot/shutdown.
+    # @app.on_startup
+    # def _(app, client): ...

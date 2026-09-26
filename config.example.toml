@@ -1,0 +1,28 @@
+# Copy to ~/.config/wledctl/config.toml
+default_device = "desk"
+
+[devices]
+desk = "192.168.1.11"        # IP or hostname (e.g. wled-desk.local)
+# shelf = "192.168.1.11"
+
+[startup]                    # applied when you log in (systemd user service)
+enabled      = true
+device       = "all"
+wait_seconds = 60            # wait for Wi-Fi/WLED to come online
+transition   = 1.0
+preset       = "1"           # id or name; leave out to use colour/effect instead
+# color      = "ff6a00"
+# effect     = "Breathe"
+brightness   = 60            # percent
+
+[shutdown]
+turn_off = true              # turn LEDs off on shutdown/logout
+
+# Named scenes = raw WLED state. Use with: wledctl scene movie
+[scenes.movie]
+bri = 30
+seg = [{ col = [[255, 80, 0]], fx = 0 }]
+
+[scenes.focus]
+bri = 200
+seg = [{ col = [[200, 220, 255]], fx = 0 }]
